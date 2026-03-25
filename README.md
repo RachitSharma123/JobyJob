@@ -105,3 +105,19 @@ Add this line (runs at 6 AM Melbourne time):
 - [ ] applier/apply_workday.py
 - [ ] ai/tailor_resume.py — JD-matched resume per application
 - [ ] candidate_profile.json — your details for form autofill
+
+
+## Streamlit Cloud deployment
+
+This repository now includes a Streamlit entrypoint (`streamlit_app.py`) so it can be deployed on [streamlit.app](https://streamlit.app).
+
+1. In Streamlit Community Cloud, point your app to this repo/branch.
+2. Set the main file path to `streamlit_app.py`.
+3. Add secrets/environment variables as needed (for APIs used by your scrapers).
+4. Deploy.
+
+Local run:
+```bash
+streamlit run streamlit_app.py
+```
+

@@ -24,12 +24,19 @@ import argparse
 from pathlib import Path
 from datetime import datetime
 
-ROOT = Path(__file__).parent.parent
+HERE = Path(__file__).resolve().parent
+ROOT = HERE if (HERE / "firms.json").exists() else HERE.parent
 sys.path.insert(0, str(ROOT))
 
-from scraper.scraper_router import run_all_scrapers
-from db.supabase_client import get_existing_external_ids, upsert_job
-from bot.telegram_notifier import send_job_card
+try:
+    from scraper.scraper_router import run_all_scrapers
+    from db.supabase_client import get_existing_external_ids, upsert_job
+    from bot.telegram_notifier import send_job_card
+except ModuleNotFoundError:
+    # Flat-repo fallback (used by Streamlit Cloud in this repository layout)
+    from scraper_router import run_all_scrapers
+    from supabase_client import get_existing_external_ids, upsert_job
+    from telegram_notifier import send_job_card
 
 
 def _log(msg: str):
@@ -92,7 +99,10 @@ def run_pipeline(
             msg_id = send_job_card(job)
             if msg_id:
                 # Update telegram_message_id in DB
-                from db.supabase_client import update_job_status
+                try:
+                    from db.supabase_client import update_job_status
+                except ModuleNotFoundError:
+                    from supabase_client import update_job_status
                 update_job_status(
                     job["external_id"],
                     status="new",
@@ -120,7 +130,10 @@ def run_pipeline(
     ]
 
     try:
-        from bot.telegram_notifier import send_text
+        try:
+            from bot.telegram_notifier import send_text
+        except ModuleNotFoundError:
+            from telegram_notifier import send_text
         send_text("\n".join(summary_lines))
     except Exception as e:
         _log(f"Summary message failed: {e}")

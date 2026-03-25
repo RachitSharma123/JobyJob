@@ -17,13 +17,20 @@ import sys
 from pathlib import Path
 from datetime import date
 
-ROOT = Path(__file__).parent.parent
+HERE = Path(__file__).resolve().parent
+ROOT = HERE if (HERE / "firms.json").exists() else HERE.parent
 FIRMS_FILE = ROOT / "firms.json"
 
 sys.path.insert(0, str(ROOT))
-from scraper.lever_scraper import scrape_lever
-from scraper.workday_scraper import scrape_workday
-from scraper.greenhouse_scraper import scrape_greenhouse
+try:
+    from scraper.lever_scraper import scrape_lever
+    from scraper.workday_scraper import scrape_workday
+    from scraper.greenhouse_scraper import scrape_greenhouse
+except ModuleNotFoundError:
+    # Flat-repo fallback (used by Streamlit Cloud in this repository layout)
+    from lever_scraper import scrape_lever
+    from workday_scraper import scrape_workday
+    from greenhouse_scraper import scrape_greenhouse
 
 
 def _load_firms() -> list[dict]:

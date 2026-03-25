@@ -105,3 +105,39 @@ Add this line (runs at 6 AM Melbourne time):
 - [ ] applier/apply_workday.py
 - [ ] ai/tailor_resume.py — JD-matched resume per application
 - [ ] candidate_profile.json — your details for form autofill
+
+
+## Streamlit Cloud deployment
+
+This repository now includes a Streamlit entrypoint (`streamlit_app.py`) so it can be deployed on [streamlit.app](https://streamlit.app).
+
+1. In Streamlit Community Cloud, point your app to this repo/branch.
+2. Set the main file path to `streamlit_app.py`.
+3. Add secrets/environment variables as needed (for APIs used by your scrapers).
+4. Deploy.
+
+Local run:
+```bash
+streamlit run streamlit_app.py
+```
+
+
+
+### Added supplier APIs in Streamlit
+
+The Streamlit app now supports all requested supplier feeds in one place:
+- Adzuna (`api.adzuna.com`)
+- Careerjet (`public.api.careerjet.net/search`)
+- Seek (`seek.com.au/api/jobsearch/v5/search`)
+- JSearch (`jsearch.p.rapidapi.com/search`)
+
+Optional: send fetched supplier jobs to your processor endpoint (default: `http://localhost:5680`).
+
+Supabase is now also supported in the Streamlit supplier flow: enable **Also save results to Supabase** to upsert supplier jobs into the existing `job_applications` table using `supabase_client.upsert_job`.
+
+Environment variables used by supplier fetchers:
+- `ADZUNA_APP_ID`
+- `ADZUNA_APP_KEY`
+- `CAREERJET_AFFID`
+- `RAPIDAPI_KEY`
+

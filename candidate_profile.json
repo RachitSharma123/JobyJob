@@ -1,0 +1,100 @@
+{
+  "full_name": "Rachit Sharma",
+  "first_name": "Rachit",
+  "last_name": "Sharma",
+  "email": "sharmarachit923@gmail.com",
+  "phone": "+61 400 000 000",
+  "phone_au": "0400 000 000",
+  "location": {
+    "address": "Reservoir, VIC 3073",
+    "suburb": "Reservoir",
+    "state": "VIC",
+    "postcode": "3073",
+    "country": "Australia",
+    "city": "Melbourne"
+  },
+  "linkedin_url": "https://www.linkedin.com/in/rachitsharma",
+  "portfolio_url": "",
+  "github_url": "",
+  "right_to_work": "Temporary Visa (Valid)",
+  "visa_type": "Student/Graduate Visa",
+  "requires_sponsorship": false,
+  "availability": "2 weeks notice",
+  "salary_expectation_min": 90000,
+  "salary_expectation_max": 120000,
+  "salary_expectation_str": "$90,000 - $120,000 AUD",
+  "work_type_preference": ["Full-time", "Contract"],
+  "remote_preference": "Hybrid",
+  "current_title": "ICT Service Desk Specialist (Level 2)",
+  "current_company": "Healthcare Australia / Primary HSA",
+  "years_experience": 4,
+  "highest_education": "Master of Business Analytics",
+  "university": "RMIT University",
+  "graduation_year": 2024,
+  "resume_pdf_path": "/home/rachit/.openclaw/workspace/ai-resume/output/Rachit_Sharma_Resume.pdf",
+  "cover_letter_template_path": "/home/rachit/.openclaw/workspace/ai-resume/output/cover_letter_template.pdf",
+  "skills": [
+    "Microsoft 365 Administration",
+    "Azure Active Directory",
+    "Power BI",
+    "Python",
+    "SQL",
+    "n8n Automation",
+    "AI Agent Development",
+    "JIRA",
+    "ServiceNow",
+    "IT Support",
+    "Data Analytics",
+    "Business Analysis",
+    "Salesforce",
+    "PowerShell",
+    "Teams Administration",
+    "SharePoint",
+    "BitLocker",
+    "ITSM"
+  ],
+  "work_history": [
+    {
+      "title": "ICT Service Desk Specialist Level 2",
+      "company": "Healthcare Australia / Primary HSA",
+      "start": "2022-03",
+      "end": "Present",
+      "location": "Melbourne, VIC",
+      "description": "Microsoft 365 administration, Azure AD, Teams, SharePoint, BitLocker, JIRA, IT support for 3000+ users."
+    },
+    {
+      "title": "IT Support Analyst",
+      "company": "Previous Role",
+      "start": "2020-06",
+      "end": "2022-02",
+      "location": "Melbourne, VIC",
+      "description": "Level 1/2 support, hardware/software troubleshooting, Active Directory."
+    }
+  ],
+  "education": [
+    {
+      "degree": "Master of Business Analytics",
+      "institution": "RMIT University",
+      "year": 2024,
+      "location": "Melbourne, VIC"
+    },
+    {
+      "degree": "Bachelor of Technology (B.Tech)",
+      "institution": "SRM University",
+      "year": 2020,
+      "location": "Chennai, India"
+    }
+  ],
+  "certifications": [
+    "Microsoft 365 Certified: Fundamentals",
+    "ITIL Foundation"
+  ],
+  "references_available": true,
+  "cover_letter_intro": "I am a Melbourne-based IT and analytics professional with 4+ years of experience in Microsoft 365 administration, IT support, and AI automation. I am passionate about bridging the gap between technology operations and business intelligence.",
+  "strengths": [
+    "Hands-on M365/Azure administration at enterprise scale",
+    "Building AI automation pipelines with n8n and Python",
+    "Strong analytical skills from Master of Business Analytics",
+    "Experience in healthcare sector compliance and ITSM"
+  ]
+}

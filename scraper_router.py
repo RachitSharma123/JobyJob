@@ -17,13 +17,39 @@ import sys
 from pathlib import Path
 from datetime import date
 
-ROOT = Path(__file__).parent.parent
+HERE = Path(__file__).resolve().parent
+ROOT = HERE if (HERE / "firms.json").exists() else HERE.parent
 FIRMS_FILE = ROOT / "firms.json"
 
 sys.path.insert(0, str(ROOT))
-from scraper.lever_scraper import scrape_lever
-from scraper.workday_scraper import scrape_workday
-from scraper.greenhouse_scraper import scrape_greenhouse
+try:
+    from scraper.lever_scraper import scrape_lever
+    from scraper.workday_scraper import scrape_workday
+    from scraper.greenhouse_scraper import scrape_greenhouse
+except ModuleNotFoundError:
+    # Flat-repo fallback (used by Streamlit Cloud in this repository layout)
+    from lever_scraper import scrape_lever
+    from workday_scraper import scrape_workday
+    from greenhouse_scraper import scrape_greenhouse
+try:
+    from job_suppliers import fetchadzuna, fetchcareerjet, fetchseek
+except ModuleNotFoundError:
+    fetchadzuna = fetchcareerjet = fetchseek = None
+
+
+def _supplier_match(job: dict, location_filter: str, role_keywords: list[str], salary_min: int) -> bool:
+    location = (job.get("location") or "").lower()
+    title = (job.get("title") or "").lower()
+    desc = (job.get("description") or "").lower()[:1000]
+    sal = job.get("salary_min")
+
+    if location_filter and location_filter.lower() not in location and "australia" not in location and "remote" not in location:
+        return False
+    if role_keywords and not any(k.lower() in f"{title} {desc}" for k in role_keywords):
+        return False
+    if salary_min and sal and sal < salary_min:
+        return False
+    return True
 
 
 def _load_firms() -> list[dict]:
@@ -105,6 +131,39 @@ def run_all_scrapers(
                 print(f"  [router] {name}: custom scraper not yet implemented, skipping")
                 continue
 
+            elif ats == "adzuna":
+                if fetchadzuna is None:
+                    print(f"  [router] {name}: supplier module unavailable, skipping")
+                    continue
+                raw = fetchadzuna(
+                    what=firm.get("query", "systems analyst"),
+                    where=firm.get("location_filter", "Melbourne"),
+                )
+                jobs = [j for j in raw if _supplier_match(j, common["location_filter"], common["role_keywords"], common["salary_min"])]
+                print(f"  [adzuna] {name}: {len(raw)} total → {len(jobs)} matched")
+
+            elif ats == "careerjet":
+                if fetchcareerjet is None:
+                    print(f"  [router] {name}: supplier module unavailable, skipping")
+                    continue
+                raw = fetchcareerjet(
+                    what=firm.get("query", "systems analyst"),
+                    where=firm.get("location_filter", "Melbourne"),
+                )
+                jobs = [j for j in raw if _supplier_match(j, common["location_filter"], common["role_keywords"], common["salary_min"])]
+                print(f"  [careerjet] {name}: {len(raw)} total → {len(jobs)} matched")
+
+            elif ats == "seek":
+                if fetchseek is None:
+                    print(f"  [router] {name}: supplier module unavailable, skipping")
+                    continue
+                raw = fetchseek(
+                    what=firm.get("query", "systems analyst"),
+                    where=firm.get("location_filter", "Melbourne"),
+                )
+                jobs = [j for j in raw if _supplier_match(j, common["location_filter"], common["role_keywords"], common["salary_min"])]
+                print(f"  [seek] {name}: {len(raw)} total → {len(jobs)} matched")
+
             else:
                 print(f"  [router] {name}: unknown ATS '{ats}', skipping")
                 continue
@@ -129,7 +188,7 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--ats", nargs="+", help="Filter by ATS type: lever workday greenhouse")
+    parser.add_argument("--ats", nargs="+", help="Filter by ATS type: lever workday greenhouse adzuna careerjet seek")
     parser.add_argument("--firm", nargs="+", help="Filter by firm name")
     parser.add_argument("--json", action="store_true", help="Output as JSON")
     args = parser.parse_args()

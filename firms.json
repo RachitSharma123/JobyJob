@@ -234,5 +234,38 @@
     "salary_min": 80000,
     "active": true,
     "notes": "Workday tenant: cognizant"
+  },
+  {
+    "name": "Adzuna AU Feed",
+    "ats": "adzuna",
+    "query": "systems analyst",
+    "careers_url": "https://api.adzuna.com/",
+    "location_filter": "Melbourne",
+    "role_keywords": ["systems", "analyst", "consultant", "technology", "IT", "data"],
+    "salary_min": 0,
+    "active": true,
+    "notes": "Supplier API feed via Adzuna."
+  },
+  {
+    "name": "Careerjet AU Feed",
+    "ats": "careerjet",
+    "query": "systems analyst",
+    "careers_url": "https://public.api.careerjet.net/search",
+    "location_filter": "Melbourne",
+    "role_keywords": ["systems", "analyst", "consultant", "technology", "IT", "data"],
+    "salary_min": 0,
+    "active": true,
+    "notes": "Supplier API feed via Careerjet."
+  },
+  {
+    "name": "Seek AU Feed",
+    "ats": "seek",
+    "query": "systems analyst",
+    "careers_url": "https://www.seek.com.au/api/jobsearch/v5/search",
+    "location_filter": "Melbourne",
+    "role_keywords": ["systems", "analyst", "consultant", "technology", "IT", "data"],
+    "salary_min": 0,
+    "active": true,
+    "notes": "Supplier API feed via Seek."
   }
 ]

@@ -31,9 +31,11 @@ def fetchadzuna(what: str, where: str = "Melbourne", page: int = 1) -> list[dict
         results.append(
             {
                 "source": "adzuna",
+                "ats_type": "adzuna",
                 "external_id": f"adzuna_{row.get('id')}",
                 "title": row.get("title", ""),
                 "company": (row.get("company") or {}).get("display_name", ""),
+                "firm_name": (row.get("company") or {}).get("display_name", ""),
                 "location": (row.get("location") or {}).get("display_name", ""),
                 "description": row.get("description", ""),
                 "apply_url": row.get("redirect_url", ""),
@@ -56,9 +58,11 @@ def fetchcareerjet(what: str, where: str = "Melbourne", page: int = 1) -> list[d
         results.append(
             {
                 "source": "careerjet",
+                "ats_type": "careerjet",
                 "external_id": f"careerjet_{row.get('url')}",
                 "title": row.get("title", ""),
                 "company": row.get("company", ""),
+                "firm_name": row.get("company", ""),
                 "location": row.get("locations", ""),
                 "description": row.get("description", ""),
                 "apply_url": row.get("url", ""),
@@ -81,9 +85,11 @@ def fetchseek(what: str, where: str = "Melbourne") -> list[dict[str, Any]]:
         results.append(
             {
                 "source": "seek",
+                "ats_type": "seek",
                 "external_id": f"seek_{listing.get('id')}",
                 "title": listing.get("title", ""),
                 "company": (listing.get("advertiser") or {}).get("description", ""),
+                "firm_name": (listing.get("advertiser") or {}).get("description", ""),
                 "location": (listing.get("locations") or [{}])[0].get("label", ""),
                 "description": listing.get("teaser", ""),
                 "apply_url": listing.get("jobUrl", ""),
@@ -107,9 +113,11 @@ def fetchjsearch(what: str, where: str = "Melbourne") -> list[dict[str, Any]]:
         results.append(
             {
                 "source": "jsearch",
+                "ats_type": "jsearch",
                 "external_id": f"jsearch_{row.get('job_id')}",
                 "title": row.get("job_title", ""),
                 "company": row.get("employer_name", ""),
+                "firm_name": row.get("employer_name", ""),
                 "location": row.get("job_city") or row.get("job_country", ""),
                 "description": row.get("job_description", ""),
                 "apply_url": row.get("job_apply_link", ""),
